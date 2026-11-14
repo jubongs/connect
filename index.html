@@ -163,7 +163,7 @@ footer a { color: #64748b; text-decoration: none; }
         pattern="[0-9]{10}"
         maxlength="10"
         minlength="10"
-        placeholder="특/영/숫 조합 10자리"
+        placeholder="숫자 10자리"
         autocomplete="off"
         required
       >
@@ -183,9 +183,8 @@ footer a { color: #64748b; text-decoration: none; }
 </div>
 
 <script>
-// 실제 TrueNAS 다운로드 API 주소로 교체해야 합니다.
 const DOWNLOAD_API =
-  "https://YOUR-CLOUDFLARE-TUNNEL.trycloudflare.com/api/download";
+  "https://vehicles-sacrifice-options-timer.trycloudflare.com/api/download";
 
 const modal = document.getElementById("passwordModal");
 const passwordInput = document.getElementById("password");
@@ -241,6 +240,9 @@ document.getElementById("downloadForm").addEventListener("submit", async (event)
       }
       if (response.status === 429) {
         throw new Error("인증 시도가 많습니다. 잠시 후 다시 시도하세요.");
+      }
+      if (response.status === 404) {
+        throw new Error("다운로드 파일을 찾을 수 없습니다.");
       }
       throw new Error("다운로드 서버 오류가 발생했습니다.");
     }
