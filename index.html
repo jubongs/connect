@@ -253,6 +253,20 @@ document.getElementById("downloadForm").addEventListener("submit", async (event)
       throw new Error("다운로드 파일이 비어 있습니다.");
     }
 
+    const downloadToken = response.headers.get("X-Download-Token");
+
+    if (downloadToken) {
+      try {
+        await fetch(DOWNLOAD_API + "/complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: downloadToken })
+        });
+      } catch (notifyError) {
+        console.error("다운로드 완료 기록 전송 실패:", notifyError);
+      }
+    }
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
